@@ -1,31 +1,43 @@
-import React, { useEffect,useState}  from 'react'
+import React, { useEffect, useState } from 'react'
 import axios, { Axios } from 'axios'
 import { useParams } from 'react-router-dom'
 import { Container } from '@mui/system';
 import PokemonDetailed from './../../components/PokemonDetailed'
 import PokemonDetailedMoves from './../../components/PokemonDetailedMoves'
+import { Grid } from '@mui/material';
+
+const classes = {
+  colorRojo: { backgroundColor: 'red' },
+  columns: { display: 'grid', gridTemplateColumns: '3fr 9fr', gridGap: '1rem' },
+}
 
 const PokemonDetail = () => {
-    const {name} = useParams();
-    const [newPokemon,setPokemon] = useState([]);
-    useEffect(() => {getPokemonName ();},[]);
+  const { name } = useParams();
+  const [newPokemon, setPokemon] = useState([]);
+  useEffect(() => { getPokemonName(); }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     console.log(newPokemon)
-    }, [newPokemon])
-    
+  }, [newPokemon])
 
-  const getPokemonName = async ()=>
-    {
+
+  const getPokemonName = async () => {
     let newPokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-    if(newPokemon?.data)setPokemon(newPokemon.data)
-    }
+    if (newPokemon?.data) setPokemon(newPokemon.data)
+  }
   return (
     <Container>
-      <PokemonDetailed {...{newPokemon}}/>
-      <PokemonDetailedMoves {...{newPokemon}}/>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={9}>
+          <PokemonDetailedMoves {...{ newPokemon }} />
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <PokemonDetailed {...{ newPokemon }} />
+        </Grid>
+      </Grid>
     </Container>
   );
 }
 
 export default PokemonDetail
+
