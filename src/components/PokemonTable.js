@@ -11,32 +11,22 @@ import Link from '@mui/material/Link';
 
 export default function BasicTable({pokemons}) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer colorGris component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Pokemon</TableCell>
-            <TableCell align="right">url</TableCell>
+            <TableCell  sx={{backgroundColor:'#424949'}} align='center'>Pokemon</TableCell>
+            <TableCell sx={{backgroundColor:'#4D5656'}} align="center">URL</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {pokemons.map((pokemon) => (
-            <TableRow
+            <TableRow 
               key={pokemon.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
-              <TableCell component="th" scope="row"> {pokemon.name} </TableCell>
-              <TableCell align="right">{pokemon.url}</TableCell>
-              <Box
-               sx=
-                {{
-                typography: 'body1',
-                '& > :not(style) + :not(style)': 
-                  {
-                  ml: 2,
-                  },
-                }}
-              >
-              <Link href = {`http://localhost:3000/pokemon/${pokemon.name}`} > {pokemon.name} </Link>
+              <TableCell sx={{backgroundColor:'#7F8C8D'}} align='center' component="th" scope="row"> {pokemon.name} </TableCell>
+              <Box align='center' component="th" scope="row" sx={{backgroundColor:'#95A5A6'}}>
+              <Link href = {`http://localhost:3000/pokemon/${pokemon.name}`} > {pokemon.url} </Link>
               </Box>
             </TableRow>
           ))}

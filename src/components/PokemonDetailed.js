@@ -7,9 +7,8 @@ import { CardActionArea } from '@mui/material';
 
 export default function ActionAreaCard({newPokemon}) {
     return (
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{backgroundColor:'#424949', maxWidth: 345 }}>
         <CardActionArea>
-            <p/>
           <CardMedia
             component="img"
             height="140"

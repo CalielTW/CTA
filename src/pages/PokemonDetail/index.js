@@ -6,11 +6,6 @@ import PokemonDetailed from './../../components/PokemonDetailed'
 import PokemonDetailedMoves from './../../components/PokemonDetailedMoves'
 import { Grid } from '@mui/material';
 
-const classes = {
-  colorRojo: { backgroundColor: 'red' },
-  columns: { display: 'grid', gridTemplateColumns: '3fr 9fr', gridGap: '1rem' },
-}
-
 const PokemonDetail = () => {
   const { name } = useParams();
   const [newPokemon, setPokemon] = useState([]);
@@ -27,7 +22,7 @@ const PokemonDetail = () => {
   }
   return (
     <Container>
-      <Grid container spacing={2}>
+      <Grid sx={{backgroundColor:'blue'}} container spacing={2}>
         <Grid item xs={12} sm={9}>
           <PokemonDetailedMoves {...{ newPokemon }} />
         </Grid>

@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Grid } from '@mui/material';
 
 export default function BasicTable({ newPokemon }) {
   return (
@@ -13,7 +14,7 @@ export default function BasicTable({ newPokemon }) {
       <Table sx={{ minWidth: 100 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Moveset</TableCell>
+            <TableCell align="center" sx={{backgroundColor:'#424949'}}>Moveset</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -21,7 +22,7 @@ export default function BasicTable({ newPokemon }) {
           <TableRow
             key={row.move.name}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
-            <TableCell component="th" scope="row"> {row.move.name} </TableCell>
+            <TableCell align="center" sx={{backgroundColor:'#7F8C8D'}} component="th" scope="row"> {row.move.name} </TableCell>
           </TableRow>
           ))}
         </TableBody>
