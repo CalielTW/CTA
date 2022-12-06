@@ -5,10 +5,12 @@ import { Container } from '@mui/system';
 import PokemonDetailed from './../../components/PokemonDetailed'
 import MovesDetailed from './../../components/MovesDetailed'
 import PokemonDetailedMoves from './../../components/PokemonDetailedMoves'
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
+import useUser from '../../hooks/useUser';
 
 const PokemonDetail = () => {
   const { name } = useParams();
+  const {getUser} = useUser();
   const [newPokemon, setPokemon] = useState([]);
   useEffect(() => { getPokemonName(); }, []);
   const [moveset, setMoveset] = useState({});
@@ -24,6 +26,7 @@ const PokemonDetail = () => {
   }
   return (
     <Container>
+      <Button onClick={()=>getUser('asdfjaksldjfaldks')}>set user alex</Button>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={9}>
           <PokemonDetailedMoves {...{ newPokemon, moveset, SearchMoveset}} />
