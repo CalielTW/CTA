@@ -5,26 +5,26 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-export default function ActionAreaCard({newPokemon}) {
+export default function ActionAreaCard({pokemon}) {
     return (
       <Card sx={{backgroundColor:'#424949', maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="140"
-            image= {`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newPokemon.id}.png`}
-            alt={`${newPokemon.name}`}
+            image= {`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon?.id}.png`}
+            alt={`${pokemon?.name}`}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {newPokemon.name}
+              {pokemon?.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Base XP:{`${newPokemon.base_experience}`}
+              Base XP:{`${pokemon?.base_experience}`}
             <p/>
-              Altura:{`${newPokemon.height}`}
+              Altura:{`${pokemon?.height}`}
             <p/>
-              Peso:{`${newPokemon.weight}`}
+              Peso:{`${pokemon?.weight}`}
             <p/>
             </Typography>
           </CardContent>

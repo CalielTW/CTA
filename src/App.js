@@ -5,12 +5,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import FlexGrid from "./pages/flexGrid";
 import PokemonDetail from "./pages/PokemonDetail";
 import PokemonMoves from "./pages/PokemonMoves";
-import UserState from "./contexts/user/UserState";
+import PokemonState from "./contexts/pokemon/PokemonState";
 
 
 function App() {
   return (
-    <UserState>
+    <PokemonState>
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -21,7 +21,7 @@ function App() {
           {/* <Route path="*" element={<NotFound/>}/> */}
         </Routes>
       </Router>
-    </UserState>
+    </PokemonState>
   );
 }
 

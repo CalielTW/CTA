@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 
-export default function BasicTable({ newPokemon , SearchMoveset }) {
+export default function BasicTable({ pokemon , SearchMoveset }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 100 }} aria-label="simple table">
@@ -19,7 +19,7 @@ export default function BasicTable({ newPokemon , SearchMoveset }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {newPokemon?.moves?.map((row) => (
+          {pokemon?.moves?.map((row) => (
           <TableRow
             key={row.move.name}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
