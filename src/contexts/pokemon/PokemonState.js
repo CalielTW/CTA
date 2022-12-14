@@ -6,12 +6,14 @@ import {
   SET_ERROR,
   CLEAR_STATE,
   SET_LOADING,
-  GET_POKEMON
+  GET_POKEMON,
+  GET_TEAM
 } from '../types';
 
 const PokemonState = props => {
   const initialState = {
     pokemon:{},
+    team: [],
     loading: false,
     error: null,
   };
@@ -35,12 +37,28 @@ const PokemonState = props => {
       }
     };
 
+const getTeam = (pokemon,arregloMovesets) => {
+  setLoading();
+  try{
+    console.log(1,arregloMovesets)
+    if (arregloMovesets.length <1)return /*Please add more moves*/ ;
+    console.log(2)
+
+  dispatch({
+    type: GET_TEAM,
+    payload: pokemon
+  });
+  } catch (err) {}
+}
+
   return (
     <pokemonContext.Provider
       value={{
         loading: state.loading,
         pokemon:state.pokemon,
+        team: state.team,
         error: state.error,
+        getTeam,
         getPokemon,
         clearPokemonState,
         setLoading,

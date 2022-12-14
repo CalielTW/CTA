@@ -11,7 +11,7 @@ import Link from '@mui/material/Link';
 
 export default function BasicTable({pokemons}) {
   return (
-    <TableContainer colorGris component={Paper}>
+    <TableContainer  component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -20,9 +20,9 @@ export default function BasicTable({pokemons}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {pokemons.map((pokemon) => (
+          {pokemons.map((pokemon,index) => (
             <TableRow 
-              key={pokemon.name}
+              key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
               <TableCell sx={{backgroundColor:'#7F8C8D'}} align='center' component="th" scope="row"> {pokemon.name} </TableCell>
               <Box align='center' component="th" scope="row" sx={{backgroundColor:'#95A5A6'}}>

@@ -8,32 +8,53 @@ import { Grid } from '@mui/material';
 import usePokemon from '../../hooks/usePokemon'
 import { useParams } from 'react-router-dom'
 
-
 const PokemonDetail = () => {
-  const { getPokemon,pokemon } = usePokemon();
-  const [moveset, setMoveset] = useState({});
+  const { getTeam,getPokemon,pokemon } = usePokemon();
   const { name } = useParams();
-
-  useEffect(() => { getPokemon(name); }, []);
+  const [arregloMovesets,setArregloMovesets] = useState([])
+ 
+useEffect(() => { getPokemon(name); }, []);
 
   const SearchMoveset = async (moveName) => {
+    let pokemonExist = arregloMovesets.find (poke=>poke.name === moveName)
+    if (pokemonExist || arregloMovesets.length >3)return;
     let moveset = await axios.get(`https://pokeapi.co/api/v2/move/${moveName}`)
-    if (moveset?.data) setMoveset(moveset.data)
+    setArregloMovesets([...arregloMovesets,moveset?.data])
   }
+ 
+const HandleAddPokemon = () => {
+ getTeam(pokemon,arregloMovesets);
+}
+
+
+  const HandleDelete = (moveName)=>{
+    let newMovesetArr = arregloMovesets.filter(move=>move?.name !==moveName)
+    setArregloMovesets(newMovesetArr)
+  }
+
+useEffect(() => {console.log(arregloMovesets)}, [arregloMovesets])
+
   return (
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={9}>
-          <PokemonDetailedMoves {...{ pokemon, moveset, SearchMoveset }} />
+          <PokemonDetailedMoves {...{ pokemon, SearchMoveset }} />
         </Grid>
         <Grid item xs={12} sm={3} sx={{ display: 'flex', flexDirection: "column", gap: '1rem' }}>
-          <PokemonDetailed {...{ pokemon }} />
-          <MovesDetailed {...{ moveset }} />
+          <PokemonDetailed {...{ pokemon,HandleAddPokemon }} />
+          {arregloMovesets.map((moveset, index)=><MovesDetailed key={index} {...{moveset,HandleDelete}} />)}
         </Grid>
-      </Grid>
+      </Grid> 
     </Container>
   );
 }
 
 export default PokemonDetail
 
+//Agregar boton para agregar pokemon a un arragment de equipo
+
+//usar pokemonState para agregar un state llamado equipo
+
+//Crear funcion en pokemonState, agregarPokemon 4 movimientos y pokemon, maximo 6 pokemon por entrenadore
+
+//Solo posible agregar si tiene al menos 1 movimiento

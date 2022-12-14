@@ -2,8 +2,9 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { Button, CardActionArea } from '@mui/material';
 
-export default function ActionAreaCard({moveset}) {
+export default function ActionAreaCard({moveset,HandleDelete}) {
     return (
         <Card sx={{ backgroundColor: '#424949', maxWidth: 345 }}>
            
@@ -27,6 +28,9 @@ export default function ActionAreaCard({moveset}) {
                             </Typography></>
                 
                 </CardContent>
+                <CardActionArea>
+                    <Button fullWidth variant='error' onClick={()=> HandleDelete(moveset.name)}> Delete </Button>
+                </CardActionArea>
         </Card>
     );
 }

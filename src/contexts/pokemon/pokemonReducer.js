@@ -3,9 +3,11 @@ import {
     SET_LOADING,
     CLEAR_STATE,
     GET_POKEMON,
+    GET_TEAM,
   } from '../types';
   
   export default (state, action) => {
+    console.log(action)
     switch (action.type) {
         case GET_POKEMON:
         return {
@@ -14,6 +16,13 @@ import {
           loading: false,
           error: null
         };
+        case GET_TEAM:
+          return {
+            ...state,
+            team: [...state.team,action.payload],
+            loading: false,
+            error: null
+          };
       case SET_ERROR:
         return {
           ...state,

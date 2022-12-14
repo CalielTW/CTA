@@ -2,10 +2,15 @@ import React, { useEffect,useState}  from 'react'
 import axios from 'axios'
 import PokemonTable from './../../components/PokemonTable'
 import { Container } from '@mui/system';
+import usePokemon from '../../hooks/usePokemon';
 
 const Index = () => {
   const [pokemons,setPokemons] = useState([]);
 useEffect(() => {getPokemons();}, [])
+const {pokemon} = usePokemon();
+useEffect(() => {
+console.log(pokemon)
+}, [pokemon])
 
 const getPokemons = async ()=>
 {

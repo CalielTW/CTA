@@ -3,12 +3,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import {Button, CardActionArea } from '@mui/material';
 
-export default function ActionAreaCard({pokemon}) {
+export default function ActionAreaCard({pokemon, HandleAddPokemon}) {
     return (
-      <Card sx={{backgroundColor:'#424949', maxWidth: 345 }}>
-        <CardActionArea>
+      <Card sx={{backgroundColor:'#424949', maxWidth: 345 }}>  
+    
+      <Button fullWidth variant='error' onClick={()=> HandleAddPokemon()}> Add to Team </Button>
+     
+
           <CardMedia
             component="img"
             height="140"
@@ -21,14 +24,13 @@ export default function ActionAreaCard({pokemon}) {
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Base XP:{`${pokemon?.base_experience}`}
-            <p/>
+            <br/>
               Altura:{`${pokemon?.height}`}
-            <p/>
+            <br/>
               Peso:{`${pokemon?.weight}`}
-            <p/>
+            <br/>
             </Typography>
           </CardContent>
-        </CardActionArea>
       </Card>
     );
  }
