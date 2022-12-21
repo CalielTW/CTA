@@ -16,7 +16,7 @@ const Index = () => {
          <Grid item xs={4}>
          <PokemonDetailed key={index} {...{pokemon,detailedInfo:true}} />
          <Grid container spacing={3}>
-         {team.moves.map((moveset, index)=>
+         {team.map((moveset, index)=>
          <Grid item xs={6}>
          <MovesDetailed key={index} {...{moveset,detailedInfo:true}} />
          </Grid>
