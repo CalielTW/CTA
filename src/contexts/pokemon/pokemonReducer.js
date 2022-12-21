@@ -4,7 +4,9 @@ import {
     CLEAR_STATE,
     GET_POKEMON,
     GET_TEAM,
+    DELETE_POKEMON
   } from '../types';
+
   
   export default (state, action) => {
     console.log(action)
@@ -40,6 +42,13 @@ import {
           ...state,
           loading: true
         }
+        case DELETE_POKEMON:
+          return {
+          ...state,
+          loading: false,
+          error: null,
+          team: [...state.team.filter((pokemon,index)=>index!==action.payload)]
+}
       default:
         return state;
     }

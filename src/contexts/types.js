@@ -1,5 +1,6 @@
 export const GET_POKEMON = 'GET_POKEMON';
-export const GET_TEAM = 'GET_TEAM'
+export const GET_TEAM = 'GET_TEAM';
+export const DELETE_POKEMON = 'DELETE_POKEMON';
 // Auth
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';

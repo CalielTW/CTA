@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import {Link} from "react-router-dom"
 
 export default function BasicTable({pokemons}) {
   return (
@@ -26,7 +26,7 @@ export default function BasicTable({pokemons}) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
               <TableCell sx={{backgroundColor:'#7F8C8D'}} align='center' component="th" scope="row"> {pokemon.name} </TableCell>
               <Box align='center' component="th" scope="row" sx={{backgroundColor:'#95A5A6'}}>
-              <Link href = {`http://localhost:3000/pokemon/${pokemon.name}`} > {pokemon.url} </Link>
+              <Link to= {`/pokemon/${pokemon.name}`} > {pokemon.url} </Link>
               </Box>
             </TableRow>
           ))}

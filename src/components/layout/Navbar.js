@@ -16,9 +16,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
-
-
+import {Link} from "react-router-dom"
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -53,7 +51,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -108,7 +106,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            to=""
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -128,9 +126,9 @@ function ResponsiveAppBar() {
                 key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
-              ><a href={page.url}>
+              ><Link to={page.url}>
                 {page.name}
-                </a>
+                </Link>
               </Button>
             ))}
           </Box>

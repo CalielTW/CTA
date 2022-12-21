@@ -23,7 +23,7 @@ useEffect(() => { getPokemon(name); }, []);
   }
  
 const HandleAddPokemon = () => {
- getTeam(pokemon,arregloMovesets);
+ getTeam({...pokemon,moves:arregloMovesets});
 }
 
 

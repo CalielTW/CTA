@@ -7,7 +7,8 @@ import {
   CLEAR_STATE,
   SET_LOADING,
   GET_POKEMON,
-  GET_TEAM
+  GET_TEAM,
+  DELETE_POKEMON
 } from '../types';
 
 const PokemonState = props => {
@@ -21,6 +22,11 @@ const PokemonState = props => {
   const [state, dispatch] = useReducer( pokemonReducer, initialState);
 
   const clearPokemonState = () => dispatch({ type: CLEAR_STATE });
+
+  const DeleteTeamPokemon = (index) => dispatch ({ 
+    type: DELETE_POKEMON ,
+    payload: index
+  });
 
   const setLoading = () => dispatch({ type: SET_LOADING });
   
@@ -37,12 +43,12 @@ const PokemonState = props => {
       }
     };
 
-const getTeam = (pokemon,arregloMovesets) => {
+const getTeam = (pokemon) => {
   setLoading();
   try{
-    console.log(1,arregloMovesets)
-    if (arregloMovesets.length <1)return /*Please add more moves*/ ;
-    console.log(2)
+    
+    if (pokemon?.moves?.length <1)return /*Please add more moves*/ ;
+
 
   dispatch({
     type: GET_TEAM,
@@ -62,6 +68,7 @@ const getTeam = (pokemon,arregloMovesets) => {
         getPokemon,
         clearPokemonState,
         setLoading,
+        DeleteTeamPokemon,
       }}
     >
       {props.children}
