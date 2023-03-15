@@ -18,7 +18,7 @@ const getPokemons = async ()=>
   if(newPokemons?.data?.results)setPokemons(newPokemons.data.results)
 }
   return (
-    <Container sx={{backgroundColor:'blue'}}>
+    <Container sx={{ m: '2rem', mx: 'auto'}}>
       <PokemonTable {...{pokemons}}/>  
     </Container>
   )

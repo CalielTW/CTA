@@ -6,13 +6,14 @@ import { Button, CardActionArea } from '@mui/material';
 
 export default function ActionAreaCard({moveset,HandleDelete,detailedInfo}) {
     return (
-        <Card sx={{ backgroundColor: '#424949', maxWidth: 345 }}>
-           
+        <Card>    
                 <CardContent>
-                
-                        <><Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div">
                             {moveset?.name || '- - - -'}
-                        </Typography><Typography variant="body2" color="text.secondary">
+                        </Typography>
+                        {
+                            detailedInfo ? true :
+                            <Typography variant="body2" color="text.secondary">
                         Accuracy:{`${moveset?.accuracy  || '- - - -'}`}
                                 <p />
                                 Power:{`${moveset?.power  || '- - - -'}`}
@@ -25,14 +26,12 @@ export default function ActionAreaCard({moveset,HandleDelete,detailedInfo}) {
                                 <p />
                                 Daño:{`${moveset?.damage_class?.name  || '- - - -'}`}
                                 <p />
-                            </Typography></>
-                
+                            </Typography>}
                 </CardContent>
                 <CardActionArea>
                 {
         detailedInfo ?  true:<Button fullWidth variant='error' onClick={()=> HandleDelete(moveset.name)}> Delete </Button>
       } 
-
                 </CardActionArea>
         </Card>
     );

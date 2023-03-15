@@ -14,7 +14,7 @@ const getMoveset = async () => {
     if (moveset?.data) setMoveset(moveset.data)
   }
   return (
-    <Container>
+    <Container sx={{ m: '2rem', mx: 'auto'}}>
       <MovesDetailed {...{moveset}}/>
     </Container>
   );

@@ -15,8 +15,8 @@ export default function BasicTable({pokemons}) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell  sx={{backgroundColor:'#424949'}} align='center'>Pokemon</TableCell>
-            <TableCell sx={{backgroundColor:'#4D5656'}} align="center">URL</TableCell>
+            <TableCell  align='center'>Pokemon</TableCell>
+            <TableCell  align="center">URL</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -24,8 +24,8 @@ export default function BasicTable({pokemons}) {
             <TableRow 
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
-              <TableCell sx={{backgroundColor:'#7F8C8D'}} align='center' component="th" scope="row"> {pokemon.name} </TableCell>
-              <Box align='center' component="th" scope="row" sx={{backgroundColor:'#95A5A6'}}>
+              <TableCell  align='center' component="th" scope="row"> {pokemon.name} </TableCell>
+              <Box align='center' component="th" scope="row" >
               <Link to= {`/pokemon/${pokemon.name}`} > {pokemon.url} </Link>
               </Box>
             </TableRow>

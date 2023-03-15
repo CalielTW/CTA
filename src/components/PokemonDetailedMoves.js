@@ -15,7 +15,7 @@ export default function BasicTable({ pokemon , SearchMoveset }) {
       <Table sx={{ minWidth: 100 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="center" sx={{backgroundColor:'#424949'}}>Moveset</TableCell>
+            <TableCell align="center" >Moveset</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -23,8 +23,8 @@ export default function BasicTable({ pokemon , SearchMoveset }) {
           <TableRow
             key={row.move.name}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}  >
-            <TableCell align="center" sx={{backgroundColor:'#7F8C8D'}} component="th" scope="row"> {row.move.name} </TableCell>
-            <Box align='center' component="th" scope="row" sx={{backgroundColor:'#95A5A6'}}>
+            <TableCell align="center"  component="th" scope="row"> {row.move.name} </TableCell>
+            <Box align='center' component="th" scope="row" >
             <Button onClick={() => SearchMoveset(row.move.name)} variant='outlined' > {row.move.name} </Button>
             </Box>
           </TableRow>

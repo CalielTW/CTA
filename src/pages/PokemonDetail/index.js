@@ -35,7 +35,7 @@ const HandleAddPokemon = () => {
 useEffect(() => {console.log(arregloMovesets)}, [arregloMovesets])
 
   return (
-    <Container>
+    <Container sx={{ m: '2rem', mx: 'auto'}}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={9}>
           <PokemonDetailedMoves {...{ pokemon, SearchMoveset }} />
