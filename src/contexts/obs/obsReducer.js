@@ -7,7 +7,7 @@ import {
   GET_SCENE_OBS,
 } from "../types";
 
-export default (state, action) => {
+const obsReducer = (state, action) => {
   switch (action.type) {
     case GET_SCENE_OBS:
       return {
@@ -58,3 +58,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default obsReducer;

@@ -43,9 +43,11 @@ export const WheelComponent = ({
 
     return () => {
       if (canvasRef.current) {
+        //eslint-disable-next-line
         canvasRef.current.removeEventListener("click", spin);
       }
     };
+    //eslint-disable-next-line
   }, [segments]);
 
   const wheelInit = () => {

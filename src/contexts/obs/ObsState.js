@@ -14,8 +14,8 @@ import { useSnackbar } from "notistack";
 
 const ObsState = (props) => {
   const initialState = {
-    obsPort: "",
-    obsPassword: "",
+    obsPort: process.env.REACT_APP_OBS_WEBSOCKET_PORT || "",
+    obsPassword: process.env.REACT_APP_OBS_WEBSOCKET_PASSWORD || "",
     obsConnected: false,
     scenes: [],
     scene: {},
@@ -83,7 +83,7 @@ const ObsState = (props) => {
             obsConnected: true,
           },
         });
-      }
+      } else setError({ message: "Error while trying to connect to obs" });
     } catch (error) {
       setError(error);
     }

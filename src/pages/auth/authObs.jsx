@@ -1,6 +1,6 @@
 import React from "react";
 import { AuthObsForm } from "../../components/auth/authObsForm";
-import { Container } from "@mui/system";
+import { Container } from "@mui/material";
 
 export const AuthObs = () => {
   return (

@@ -9,9 +9,10 @@ export const connectObs = async ({
 }) => {
   const obs = new OBSWebSocket();
   const obsSelectedPort = `ws://localhost:${obsPort}`;
-  let success;
+  const success = true;
 
   try {
+    //eslint-disable-next-line
     const { obsWebSocketVersion, negotiatedRpcVersion } = await obs.connect(
       obsSelectedPort,
       obsPassword,
@@ -38,10 +39,10 @@ export const connectObs = async ({
       setError(event);
     });
 
-    return (success = true);
+    return success;
   } catch (error) {
-    setError(error);
+    setError({ message: "Error while trying to connect to obs" });
 
-    return (success = false);
+    return !success;
   }
 };

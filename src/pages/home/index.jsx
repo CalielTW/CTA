@@ -1,6 +1,5 @@
 import React from "react";
-import { Container } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 export const Home = () => {

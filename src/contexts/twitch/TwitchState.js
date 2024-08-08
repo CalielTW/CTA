@@ -17,8 +17,8 @@ import { useSnackbar } from "notistack";
 
 const TwitchState = (props) => {
   const initialState = {
-    twitchName: "",
-    twitchToken: "",
+    twitchName: process.env.REACT_APP_TWITCH_NAME || "",
+    twitchToken: process.env.REACT_APP_TWITCH_TOKEN || "",
     messages: [],
     messagesWheel: [],
     onlySubs: false,
@@ -34,8 +34,6 @@ const TwitchState = (props) => {
     try {
       const { isSelf, tags, message } = newMessage;
       const { subscriber, isModerator } = tags;
-
-      console.log(newMessage);
 
       const wheelCommandRegex = /^\s*!wheel\s+/;
       const isWheelCommand = wheelCommandRegex.test(message);

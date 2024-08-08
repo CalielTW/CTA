@@ -1,4 +1,4 @@
-import { Chat, ChatEvents, Api, ChatCommands } from "twitch-js";
+import { Chat, ChatEvents } from "twitch-js";
 
 export const connectTwitch = async ({
   twitchName,
@@ -8,7 +8,7 @@ export const connectTwitch = async ({
 }) => {
   const channel = twitchName;
   const twitchChannel = `#${channel}`;
-  let success;
+  const success = true;
 
   try {
     const chat = new Chat({
@@ -27,10 +27,10 @@ export const connectTwitch = async ({
       getTwitchMessage(payload);
     });
 
-    return (success = true);
+    return success;
   } catch (error) {
     setError(error);
 
-    return (success = false);
+    return !success;
   }
 };

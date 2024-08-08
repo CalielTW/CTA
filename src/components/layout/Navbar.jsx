@@ -34,6 +34,7 @@ export const NavBar = () => {
 
       setPagesMenu(auxMenu);
     }
+    //eslint-disable-next-line
   }, [twitchName, twitchToken, loading, error]);
 
   const handleOpenNavMenu = (event) => {

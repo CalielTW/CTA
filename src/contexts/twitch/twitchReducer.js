@@ -10,7 +10,7 @@ import {
   REMOVE_MESSAGES_WHEEL,
 } from "../types";
 
-export default (state, action) => {
+const twitchReducer = (state, action) => {
   switch (action.type) {
     case LOG_IN_TWITCH:
       return {
@@ -79,3 +79,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default twitchReducer;
