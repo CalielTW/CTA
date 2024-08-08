@@ -1,33 +1,46 @@
 import React from "react";
-import './App.css';
-import Home from './pages/home'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import FlexGrid from "./pages/flexGrid";
-import PokemonDetail from "./pages/PokemonDetail";
-import PokemonTeam from "./pages/PokemonTeam";
-import PokemonMoves from "./pages/PokemonMoves";
-import PokemonState from "./contexts/pokemon/PokemonState";
-import Navbar from "./components/layout/Navbar";
-import { SnackbarProvider } from 'notistack';
+import "./App.css";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { NavBar } from "./components/layout/Navbar";
+import { SnackbarProvider } from "notistack";
+import darkTheme from "./constants/darkTheme";
 
+//Pages
+import { AuthTwitch } from "./pages/auth/authTwitch";
+import { AuthObs } from "./pages/auth/authObs";
+import { TwitchView } from "./pages/twitchName";
+import { WheelView } from "./pages/wheel";
 
-function App() {
+//States
+import TwitchState from "./contexts/twitch/TwitchState";
+import ObsState from "./contexts/obs/ObsState";
+import WheelState from "./contexts/wheel/WheelState";
+
+const App = () => {
   return (
-    <SnackbarProvider maxSnack={3}>
-    <PokemonState>
-      <Router>
-      <Navbar/>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/flex-Grid" element={<FlexGrid />} />
-          <Route exact path="/pokemon/:name" element={<PokemonDetail />} />
-          <Route exact path="/pokemon/move/:name" element={<PokemonMoves />} />
-          <Route exact path="/team" element={<PokemonTeam/>}/>
-        </Routes>
-      </Router>
-    </PokemonState>
-    </SnackbarProvider>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <SnackbarProvider maxSnack={3}>
+        <TwitchState>
+          <ObsState>
+            <WheelState>
+              <Router>
+                <NavBar />
+                <Routes>
+                  <Route exact path="/Twitch" element={<AuthTwitch />} />
+                  <Route exact path="/Obs" element={<AuthObs />} />
+                  <Route exact path="/Twitch/:name" element={<TwitchView />} />
+                  <Route exact path="/Twitch/Wheel" element={<WheelView />} />
+                </Routes>
+              </Router>
+            </WheelState>
+          </ObsState>
+        </TwitchState>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
