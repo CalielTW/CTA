@@ -100,7 +100,7 @@ export const WheelView = () => {
               primaryColor="gray"
               contrastColor="white"
               buttonText="Spin"
-              isOnlyOnce={true}
+              isOnlyOnce={false}
             />
           </Grid>
         </Grid>

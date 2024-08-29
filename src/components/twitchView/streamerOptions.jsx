@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   Box,
@@ -10,37 +10,27 @@ import { purple } from "@mui/material/colors";
 import useObs from "../../hooks/useObs";
 
 export const StreamerOptions = ({ name }) => {
-  const { obsConnected, scenes, scene } = useObs();
-  const [activeScenes, setActiveScenes] = useState({});
-  const [ttsScenes, setTtsScenes] = useState({});
-
-  useEffect(() => {
-    const initialActiveScenes = scenes.reduce((acc, s) => {
-      acc[s.sceneUuid] = s.sceneUuid === scene?.sceneUuid;
-      return acc;
-    }, {});
-    const initialTtsScenes = scenes.reduce((acc, s) => {
-      acc[s.sceneUuid] = false;
-      return acc;
-    }, {});
-    setActiveScenes(initialActiveScenes);
-    setTtsScenes(initialTtsScenes);
-  }, [scenes, scene]);
+  const { obsConnected, scenes, setScenes } = useObs();
 
   const handleActivateScene = (event) => {
     const { name, checked } = event.target;
-    setActiveScenes((prevActiveScenes) => ({
-      ...prevActiveScenes,
-      [name]: checked,
-    }));
+    const updatedScenes = scenes.map((scene) => {
+      const isCurrentScene = scene.sceneUuid === name;
+      return {
+        ...scene,
+        active: isCurrentScene || checked,
+      };
+    });
+    setScenes(updatedScenes);
   };
 
   const handleActivateTts = (event) => {
     const { name, checked } = event.target;
-    setTtsScenes((prevTtsScenes) => ({
-      ...prevTtsScenes,
-      [name]: checked,
-    }));
+    const updatedScenes = scenes.map((scene) =>
+      scene.sceneUuid === name ? { ...scene, tts: checked } : scene
+    );
+
+    setScenes(updatedScenes);
   };
 
   return (
@@ -65,7 +55,7 @@ export const StreamerOptions = ({ name }) => {
 
       {obsConnected ? (
         <Box sx={{ display: "flex", flexDirection: "column-reverse", gap: 2 }}>
-          {scenes.length > 0 &&
+          {scenes?.length > 0 &&
             scenes.map((scene) => (
               <Box
                 key={scene.sceneUuid}
@@ -74,8 +64,7 @@ export const StreamerOptions = ({ name }) => {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={activeScenes[scene.sceneUuid] || false}
-                      onChange={handleActivateScene}
+                      checked={scene.active || false}
                       name={scene.sceneUuid}
                       color="primary"
                     />
@@ -85,7 +74,7 @@ export const StreamerOptions = ({ name }) => {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={ttsScenes[scene.sceneUuid] || false}
+                      checked={scene.tts || false}
                       onChange={handleActivateTts}
                       name={scene.sceneUuid}
                       color="secondary"

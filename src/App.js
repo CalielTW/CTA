@@ -23,8 +23,8 @@ const App = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <SnackbarProvider maxSnack={3}>
-        <TwitchState>
-          <ObsState>
+        <ObsState>
+          <TwitchState>
             <WheelState>
               <Router>
                 <NavBar />
@@ -36,8 +36,8 @@ const App = () => {
                 </Routes>
               </Router>
             </WheelState>
-          </ObsState>
-        </TwitchState>
+          </TwitchState>
+        </ObsState>
       </SnackbarProvider>
     </ThemeProvider>
   );

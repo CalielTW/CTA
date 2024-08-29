@@ -21,10 +21,9 @@ export const connectTwitch = async ({
 
     //Get twitch chat info
     chat.on(ChatEvents.ALL, (payload) => {
-      if (payload.channel !== twitchChannel || payload.command !== "PRIVMSG")
-        return;
-
-      getTwitchMessage(payload);
+      if (payload.channel === twitchChannel) {
+        if (payload.command === "PRIVMSG") getTwitchMessage(payload);
+      }
     });
 
     return success;

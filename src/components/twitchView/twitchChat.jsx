@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Card, List, ListItem, Box } from "@mui/material";
+import {
+  Typography,
+  Card,
+  List,
+  ListItem,
+  Box,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
 import { getRandomColor } from "../../utils/getRandomColor";
 import { grey, purple } from "@mui/material/colors";
 import useTwitch from "../../hooks/useTwitch";
+import { Copy } from "react-feather";
 
 const replaceEmotes = (message, emotes) => {
   let modifiedMessage = message;
@@ -35,6 +44,10 @@ export const TwitchChat = ({ name }) => {
 
     setMessagesWithColors(auxMessages);
   }, [messages]);
+
+  const handleCopy = (customRewardId) => {
+    navigator.clipboard.writeText(customRewardId);
+  };
 
   return (
     <>
@@ -75,7 +88,9 @@ export const TwitchChat = ({ name }) => {
                 >
                   <Box
                     sx={{
-                      backgroundColor: message.color,
+                      backgroundColor: message?.tags?.color
+                        ? message.tags.color
+                        : message.color,
                       color: "white",
                       borderRadius: "15px",
                       padding: 1,
@@ -94,17 +109,37 @@ export const TwitchChat = ({ name }) => {
                       {message.tags.displayName}
                     </Typography>
                   </Box>
-                  <Box
-                    sx={{
-                      backgroundColor: "#ffffff",
-                      borderRadius: "15px",
-                      padding: 2,
-                      boxShadow: 1,
-                      maxWidth: "60%",
-                      wordWrap: "break-word",
-                    }}
-                    dangerouslySetInnerHTML={{ __html: messageWithEmotes }}
-                  ></Box>
+
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box
+                      sx={{
+                        backgroundColor: "#ffffff",
+                        borderRadius: "15px",
+                        padding: 2,
+                        boxShadow: 1,
+                        maxWidth: "100%",
+                      }}
+                      dangerouslySetInnerHTML={{ __html: messageWithEmotes }}
+                    />
+                    <Tooltip title="Copy Reward ID">
+                      <IconButton
+                        type="button"
+                        onClick={() => handleCopy(message.tags.customRewardId)}
+                        size="large"
+                        sx={{
+                          marginLeft: 1,
+                          backgroundColor: grey[200],
+                          borderRadius: "50%",
+                          padding: "10px",
+                          visibility: message.tags.customRewardId
+                            ? "visible"
+                            : "hidden",
+                        }}
+                      >
+                        <Copy size={16} />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                 </ListItem>
               );
             })}
