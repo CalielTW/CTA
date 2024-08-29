@@ -64,7 +64,7 @@ This project was bootstrapped with [Caliel Twitch App](https://github.com/Caliel
    REACT_APP_ES_MALE=es-MX-JorgeNeural
    ```
 
-   2. To generate the `TWITCH REWARDS ID's` make a new reedem in your channel with a text input, send it and in the chat view in the app, you will see a button to copy the id of thar reedem
+2. To generate the `TWITCH REWARDS ID's` make a new reedem in your channel with a text input, send it and in the chat view in the app, you will see a button to copy the id of thar reedem
 
 ## Avaible Scripts
 
@@ -96,6 +96,7 @@ Contributions are welcome! Please read the CONTRIBUTING.md for details on the co
 
 - Twitch API
 - OBS Websockets
+- Azure Microsoft Services
 
 ## Contact
 
