@@ -83,6 +83,7 @@ You may also see any lint errors in the console.
 - Twitch Chat Integration: Displays Twitch chat messages in real-time with subscriber and command-based filtering.
 - Spin Wheel Component: A customizable spin wheel that can be triggered by specific Twitch chat commands.
 - OBS Websocket Control: Control OBS scenes and sources directly from the app.
+- Azure services for up to 3 TTS continuous users.
 
 ## License
 
