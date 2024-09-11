@@ -17,7 +17,6 @@ export class OBSWebsocketsManager {
           eventSubscriptions: EventSubscription.All,
           rpcVersion: 1,
         });
-      console.log("Connected to OBS Websockets!");
 
       // Get the initial scene list
       this.getSceneList();

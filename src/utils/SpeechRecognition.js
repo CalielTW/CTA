@@ -4,18 +4,39 @@ import {
   ResultReason,
 } from "microsoft-cognitiveservices-speech-sdk";
 
-let currentSource = null;
+const audioContext = new (window.AudioContext || window.webkitAudioContext)({
+  sampleRate: 16000,
+});
+
+const ttsQueue = [];
+let isProcessing = false;
 
 export const azureMicrosoftServices = async (
   twitchMessage,
   obsManager,
   userNumber
 ) => {
-  const speechConfig = SpeechConfig.fromSubscription(
-    process.env.REACT_APP_SPEECH_KEY,
-    process.env.REACT_APP_SPEECH_REGION
-  );
+  ttsQueue.push({
+    twitchMessage,
+    obsManager,
+    userNumber,
+  });
 
+  if (isProcessing) return;
+
+  isProcessing = true;
+
+  while (ttsQueue.length > 0) {
+    const { twitchMessage, obsManager, userNumber } = ttsQueue.shift();
+
+    await processTtsMessage(twitchMessage, obsManager, userNumber);
+  }
+
+  isProcessing = false;
+};
+
+// Function to process each TTS message
+const processTtsMessage = async (twitchMessage, obsManager, userNumber) => {
   const VOICE_STYLES = [
     "cheerful",
     "sad",
@@ -41,7 +62,7 @@ export const azureMicrosoftServices = async (
       : process.env.REACT_APP_EN_MALE,
   };
 
-  const voiceName = voiceNames[3];
+  const voiceName = voiceNames[userNumber];
 
   const styleRegex = new RegExp(`\\b(${VOICE_STYLES.join("|")})\\b`, "i");
   const match = twitchMessage.match(styleRegex);
@@ -59,80 +80,83 @@ export const azureMicrosoftServices = async (
 
   const ssmlMessage = selectedStyle
     ? `
-  <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${process.env.REACT_APP_STT_REGION}">
-    <voice name="${voiceName}">
-      <mstts:express-as style="${selectedStyle}">
-        ${cleanMessage}
-      </mstts:express-as>
-    </voice>
-  </speak>
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${process.env.REACT_APP_STT_REGION}">
+  <voice name="${voiceName}">
+    <mstts:express-as style="${selectedStyle}">
+      ${cleanMessage}
+    </mstts:express-as>
+  </voice>
+</speak>
     `
     : `
-  <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${process.env.REACT_APP_STT_REGION}">
-    <voice name="${voiceName}">
-      ${cleanMessage}
-    </voice>
-  </speak>
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${process.env.REACT_APP_STT_REGION}">
+  <voice name="${voiceName}">
+    ${cleanMessage}
+  </voice>
+</speak>
     `;
+
+  const speechConfig = SpeechConfig.fromSubscription(
+    process.env.REACT_APP_SPEECH_KEY,
+    process.env.REACT_APP_SPEECH_REGION
+  );
 
   const synth = new SpeechSynthesizer(speechConfig);
 
-  const playAudioBuffer = async (audioBuffer) => {
-    const audioContext = new (window.AudioContext ||
-      window.webkitAudioContext)();
-    if (currentSource) {
-      currentSource.stop();
-    }
+  try {
+    const result = await synth.speakSsmlAsyncPromise(ssmlMessage);
 
+    if (result.reason === ResultReason.SynthesizingAudioCompleted) {
+      const audioBuffer = await audioContext.decodeAudioData(result.audioData);
+
+      await obsManager.setFilterVisibility(
+        "Line In",
+        `TTS-Char${userNumber}`,
+        true
+      );
+
+      await playAudioBuffer(audioBuffer);
+
+      await obsManager.setFilterVisibility(
+        "Line In",
+        `TTS-Char${userNumber}`,
+        false
+      );
+    } else if (result.reason === ResultReason.Canceled) {
+      console.error("CANCELED: Reason=" + result.privErrorDetails);
+    }
+  } catch (error) {
+    console.error("Error during TTS processing: ", error);
+  } finally {
+    synth.close();
+  }
+};
+
+// Function to play the audio buffer
+const playAudioBuffer = async (audioBuffer) => {
+  return new Promise((resolve, reject) => {
     const source = audioContext.createBufferSource();
     source.buffer = audioBuffer;
-    source.connect(audioContext.destination);
     source.start(0);
 
-    currentSource = source;
+    source.onended = () => {
+      resolve();
+    };
 
-    return new Promise((resolve) => {
-      source.onended = () => {
-        currentSource = null;
-        resolve();
-      };
-    });
-  };
+    source.onerror = (e) => {
+      console.error("Audio playback error: ", e);
+      reject(e);
+    };
+  });
+};
 
-  synth.speakSsmlAsync(
-    ssmlMessage,
-    async (result) => {
-      if (result.reason === ResultReason.SynthesizingAudioCompleted) {
-        console.log("Speech synthesized successfully.");
-
-        const audioContext = new (window.AudioContext ||
-          window.webkitAudioContext)();
-        const audioData = new Uint8Array(result.audioData);
-        const audioBuffer = await audioContext.decodeAudioData(
-          audioData.buffer
-        );
-
-        await obsManager.setFilterVisibility(
-          "Line In",
-          `TTS-Char${userNumber}`,
-          true
-        );
-
-        await playAudioBuffer(audioBuffer);
-
-        await obsManager.setFilterVisibility(
-          "Line In",
-          `TTS-Char${userNumber}`,
-          false
-        );
-      } else if (result.reason === ResultReason.Canceled) {
-        console.log("CANCELED: Reason=" + result.privErrorDetails);
-      }
-      synth.close();
-    },
-    (error) => {
-      console.log("Error: ", error);
-      synth.close();
-    }
-  );
+// Extend SpeechSynthesizer with a Promise-based speakSsmlAsync
+SpeechSynthesizer.prototype.speakSsmlAsyncPromise = function (ssml) {
+  return new Promise((resolve, reject) => {
+    this.speakSsmlAsync(
+      ssml,
+      (result) => resolve(result),
+      (error) => reject(error)
+    );
+  });
 };

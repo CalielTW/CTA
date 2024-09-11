@@ -1,4 +1,4 @@
-# Caliel Twitch App
+# Caliel Twitch App 0.2.1
 
 This project leverages the Twitch API and OBS Websockets to manage and enhance your streaming experience.
 
@@ -11,6 +11,7 @@ This project was bootstrapped with [Caliel Twitch App](https://github.com/Caliel
 - Node.js
 - npm (Node Package Manager)
 - OBS Studio with Websockets plugin installed(optional)
+- Microsoft Azure's TTS service account(optional)
 
 ## Installation
 
@@ -24,20 +25,21 @@ This project was bootstrapped with [Caliel Twitch App](https://github.com/Caliel
    npm install
    ```
 3. This uses the twitch-js package to connect to your Twitch channel.
-   First you must generate a Access Token for your account. You can do this at: https://twitchtokengenerator.com/ , just make sure the Access Token has chat:read, chat:edit and channel:read:redemptions enabled.
+   First you must generate a Access Token for your account. You can do this at: https://twitchtokengenerator.com/ , just make sure the Access Token has `chat:read`, `chat:edit` and `channel:read:redemptions` enabled.
 4. Optionally, you can use Microsoft Azure's TTS service for the text-to-speech voices.
    First you must make an account and sign up for Microsoft Azure's services.
    Then use their site to generate an access key and region for the text-to-speech service.
-   Then, set these as windows environment variables named AZURE_TTS_KEY and AZURE_TTS_REGION.
+   Then, set these as windows environment variables named `AZURE_TTS_KEY` and `AZURE_TTS_REGION`.
 5. Optionally, you can use OBS Websockets and an OBS plugin for further use of this app.
    First open up OBS. Make sure you're running version 28.X or later.
    Click Tools, then WebSocket Server Settings.
    Make sure "Enable WebSocket server" is checked. Make sure Server Port is set to the same you will use inside the app, dont use port 3000 as is already in use, and set a Server Password.
    Next install the Move OBS plugin: https://obsproject.com/forum/resources/move.913/
+   1. In the case of adding Azure and Obs WebSockets in order to make it work as expected you will need to first create an image with the name `TTS-Char1` wich supports up to `TTS-Char3` in any scene you want to use the TTS on then set a new audio channel called `Line In` where you will send only the audio for the TTS as well as add a `audio movement` filter within the created audio channel with the same name as the created images, modify this filter as how you would like for it to work.
 
 ## Configuration
 
-1. Create a `.env` file in the root of your project and add your Twitch API credentials and OBS Websocket settings:
+1. Create a `.env` file in the root of your project and add your Twitch API, OBS Websocket and Azure settings/credentials:
 
    ```
    REACT_APP_TWITCH_CLIENT_ID=your_twitch_client_id
@@ -64,7 +66,7 @@ This project was bootstrapped with [Caliel Twitch App](https://github.com/Caliel
    REACT_APP_ES_MALE=es-MX-JorgeNeural
    ```
 
-2. To generate the `TWITCH REWARDS ID's` make a new reedem in your channel with a text input, send it and in the chat view in the app, you will see a button to copy the id of thar reedem
+2. To generate the `TWITCH REWARDS ID's` make a new reedem in your channel with a text input, send it and in the chat view in the app, you will see a button to copy the id of that reedem
 
 ## Avaible Scripts
 

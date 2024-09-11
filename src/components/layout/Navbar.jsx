@@ -101,8 +101,6 @@ export const NavBar = () => {
     }
   };
 
-  console.log(currentScene);
-
   useEffect(() => {
     handleShowTtsCharacter(currentTtsUser1 !== "" && ttsMode, 1);
     handleShowTtsCharacter(currentTtsUser2 !== "" && ttsMode, 2);
